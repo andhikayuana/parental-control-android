@@ -5,4 +5,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!--begin navigation drawer-->
+    <string name="nav_daftar_aplikasi">Daftar Aplikasi</string>
+    <string name="nav_set_timer">Set Timer</string>
+    <string name="nav_materi">Materi</string>
+    <string name="nav_cara_pakai">Cara Pakai</string>
+    <!--end navigation drawer-->
+
 </resources>
