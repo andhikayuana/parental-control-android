@@ -11,6 +11,10 @@
     <string name="nav_set_timer">Set Timer</string>
     <string name="nav_materi">Materi</string>
     <string name="nav_cara_pakai">Cara Pakai</string>
+    <string name="nav_logout">Log Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--end navigation drawer-->
 
 </resources>
