@@ -3,6 +3,8 @@ package com.kodemetro.yuana.parentalcontrol;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity
             DaftarAplikasiFragment fragment= new DaftarAplikasiFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
+                    .add(R.id.fragment_container, fragment)
                     .commit();
         }
 
@@ -91,13 +93,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = null;
+
         if (id == R.id.nav_daftar_aplikasi) {
-            // Handle the camera action
+
+            fragment = new DaftarAplikasiFragment();
+
         } else if (id == R.id.nav_set_timer) {
+
+            fragment = new SetTimerFragment();
 
         } else if (id == R.id.nav_materi) {
 
+            fragment = new MateriFragment();
+
         } else if (id == R.id.nav_cara_pakai) {
+
+            fragment = new CaraPakaiFragment();
 
         } else if (id == R.id.nav_logout) {
             new AlertDialog.Builder(this)
@@ -117,8 +130,16 @@ public class MainActivity extends AppCompatActivity
                     .create()
                     .show();
         }
+
+        if (fragment != null){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 }
