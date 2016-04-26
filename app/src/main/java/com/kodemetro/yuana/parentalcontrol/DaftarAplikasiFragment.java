@@ -4,9 +4,17 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,6 +36,22 @@ public class DaftarAplikasiFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public RecyclerView mRecView;
+
+    private List<ListApp> listApps;
+    private ItemAdapter mAdapter;
+
+    public class ListApp {
+        String name, desc;
+        int imgIcon;
+
+        ListApp(String name, String desc, int imgIcon){
+            this.name       = name;
+            this.desc       = desc;
+            this.imgIcon    = imgIcon;
+        }
+    }
 
     public DaftarAplikasiFragment() {
         // Required empty public constructor
@@ -64,7 +88,26 @@ public class DaftarAplikasiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daftar_aplikasi, container, false);
+        View root = inflater.inflate(R.layout.fragment_daftar_aplikasi, container, false);
+
+        mRecView = (RecyclerView) root.findViewById(R.id.recView);
+        mRecView.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+
+        mRecView.setLayoutManager(llm);
+
+        listApps = new ArrayList<>();
+        listApps.add(new ListApp("Nama aplikasi 1", "Deskripsi aplikasi 1", R.drawable.ic_content));
+        listApps.add(new ListApp("Nama aplikasi 2", "Deskripsi aplikasi 2", R.drawable.ic_help));
+        listApps.add(new ListApp("Nama aplikasi 3", "Deskripsi aplikasi 3", R.drawable.ic_list));
+
+        mAdapter = new ItemAdapter(listApps);
+        mRecView.setAdapter(mAdapter);
+
+
+
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +147,69 @@ public class DaftarAplikasiFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView txtName;
+        public TextView txtDesc;
+        public ImageView imgIcon;
+
+        public View root;
+
+        public ViewHolder(View v){
+            super(v);
+
+            root = v;
+
+            txtName     = (TextView) v.findViewById(R.id.txtName);
+            txtDesc     = (TextView) v.findViewById(R.id.txtDesc);
+            imgIcon     = (ImageView)v.findViewById(R.id.imgIcon);
+
+
+        }
+    }
+
+    public class ItemAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener{
+
+        public List<ListApp> mApp;
+
+        ItemAdapter(List<ListApp> itemApp){
+            this.mApp = itemApp;
+
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
+        }
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_view, parent, false);
+
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+
+            ListApp la = listApps.get(position);
+
+            holder.txtName.setText(la.name);
+            holder.txtDesc.setText(la.desc);
+
+            holder.root.setOnClickListener(this);
+        }
+
+        @Override
+        public int getItemCount() {
+            return listApps.size();
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity().getApplicationContext(), "Halo", Toast.LENGTH_SHORT).show();
+        }
     }
 }
