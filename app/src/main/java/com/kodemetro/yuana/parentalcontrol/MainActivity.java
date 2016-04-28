@@ -1,6 +1,7 @@
 package com.kodemetro.yuana.parentalcontrol;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -118,7 +119,11 @@ public class MainActivity extends AppCompatActivity
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(getApplicationContext(), "ini keluar", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "ini keluar", Toast.LENGTH_SHORT).show();
+                            Intent in = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(in);
+                            finish();
+
                         }
                     })
                     .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
