@@ -42,7 +42,7 @@ public class DaftarAplikasiFragment extends Fragment {
     private List<ListApp> listApps;
     private ItemAdapter mAdapter;
 
-    public class ListApp {
+    class ListApp {
         String name, desc;
         int imgIcon;
 
@@ -101,11 +101,18 @@ public class DaftarAplikasiFragment extends Fragment {
         listApps.add(new ListApp("Nama aplikasi 1", "Deskripsi aplikasi 1", R.drawable.ic_content));
         listApps.add(new ListApp("Nama aplikasi 2", "Deskripsi aplikasi 2", R.drawable.ic_help));
         listApps.add(new ListApp("Nama aplikasi 3", "Deskripsi aplikasi 3", R.drawable.ic_list));
+        listApps.add(new ListApp("Nama aplikasi 4", "Deskripsi aplikasi 4", R.drawable.ic_logout));
+        listApps.add(new ListApp("Nama aplikasi 5", "Deskripsi aplikasi 5", R.drawable.ic_time));
+        listApps.add(new ListApp("Nama aplikasi 6", "Deskripsi aplikasi 6", R.drawable.ic_content));
+        listApps.add(new ListApp("Nama aplikasi 7", "Deskripsi aplikasi 7", R.drawable.ic_help));
+        listApps.add(new ListApp("Nama aplikasi 8", "Deskripsi aplikasi 8", R.drawable.ic_list));
+        listApps.add(new ListApp("Nama aplikasi 9", "Deskripsi aplikasi 9", R.drawable.ic_time));
+        listApps.add(new ListApp("Nama aplikasi 10", "Deskripsi aplikasi 10", R.drawable.ic_content));
+        listApps.add(new ListApp("Nama aplikasi 11", "Deskripsi aplikasi 1", R.drawable.ic_help));
+        listApps.add(new ListApp("Nama aplikasi 12", "Deskripsi aplikasi 12", R.drawable.ic_list));
 
         mAdapter = new ItemAdapter(listApps);
         mRecView.setAdapter(mAdapter);
-
-
 
         return root;
     }
@@ -198,6 +205,7 @@ public class DaftarAplikasiFragment extends Fragment {
 
             holder.txtName.setText(la.name);
             holder.txtDesc.setText(la.desc);
+            holder.imgIcon.setImageResource(la.imgIcon);
 
             holder.root.setOnClickListener(this);
         }
