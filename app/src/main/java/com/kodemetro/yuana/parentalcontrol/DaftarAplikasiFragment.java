@@ -1,6 +1,7 @@
 package com.kodemetro.yuana.parentalcontrol;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,8 @@ public class DaftarAplikasiFragment extends Fragment {
 
     private List<ListApp> listApps;
     private ItemAdapter mAdapter;
+
+    private PackageManager packageManager = null;
 
     class ListApp {
         String name, desc;
