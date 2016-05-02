@@ -1,10 +1,8 @@
 package com.kodemetro.yuana.parentalcontrol;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,70 +15,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DaftarAplikasiFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DaftarAplikasiFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DaftarAplikasiFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public  RecyclerView            mRecView;
+    public LoadApplications         loadApplicationsTask;
 
-    private OnFragmentInteractionListener mListener;
-
-    public RecyclerView mRecView;
-
-    private List<ApplicationInfo> listApps;
-    private ItemAdapter mAdapter;
-
-    private PackageManager packageManager = null;
+    private List<ApplicationInfo>   listApps;
+    private ItemAdapter             mAdapter;
+    private PackageManager          packageManager;
+    private Context                 mContext;
 
 
     public DaftarAplikasiFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DaftarAplikasiFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DaftarAplikasiFragment newInstance(String param1, String param2) {
-        DaftarAplikasiFragment fragment = new DaftarAplikasiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
-        packageManager = getActivity().getPackageManager();
+        mContext = getActivity().getApplicationContext();
 
-        new LoadApplications().execute();
+        packageManager = mContext.getPackageManager();
+
+        loadApplicationsTask = new LoadApplications();
+        loadApplicationsTask.execute();
     }
 
     @Override
@@ -92,35 +54,17 @@ public class DaftarAplikasiFragment extends Fragment {
         mRecView = (RecyclerView) root.findViewById(R.id.recView);
         mRecView.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        LinearLayoutManager llm = new LinearLayoutManager(mContext);
 
         mRecView.setLayoutManager(llm);
-/*
-        listApps = new ArrayList<>();
-        listApps.add(new ListApp("Nama aplikasi 1", "Deskripsi aplikasi 1", R.drawable.ic_content));
-        listApps.add(new ListApp("Nama aplikasi 2", "Deskripsi aplikasi 2", R.drawable.ic_help));
-        listApps.add(new ListApp("Nama aplikasi 3", "Deskripsi aplikasi 3", R.drawable.ic_list));
-        listApps.add(new ListApp("Nama aplikasi 4", "Deskripsi aplikasi 4", R.drawable.ic_logout));
-        listApps.add(new ListApp("Nama aplikasi 5", "Deskripsi aplikasi 5", R.drawable.ic_time));
-        listApps.add(new ListApp("Nama aplikasi 6", "Deskripsi aplikasi 6", R.drawable.ic_content));
-        listApps.add(new ListApp("Nama aplikasi 7", "Deskripsi aplikasi 7", R.drawable.ic_help));
-        listApps.add(new ListApp("Nama aplikasi 8", "Deskripsi aplikasi 8", R.drawable.ic_list));
-        listApps.add(new ListApp("Nama aplikasi 9", "Deskripsi aplikasi 9", R.drawable.ic_time));
-        listApps.add(new ListApp("Nama aplikasi 10", "Deskripsi aplikasi 10", R.drawable.ic_content));
-        listApps.add(new ListApp("Nama aplikasi 11", "Deskripsi aplikasi 1", R.drawable.ic_help));
-        listApps.add(new ListApp("Nama aplikasi 12", "Deskripsi aplikasi 12", R.drawable.ic_list));
-
-        mAdapter = new ItemAdapter(listApps); */
-//        mRecView.setAdapter(mAdapter);
 
         return root;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRecView.setAdapter(mAdapter);
     }
 
     @Override
@@ -137,22 +81,6 @@ public class DaftarAplikasiFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -221,10 +149,15 @@ public class DaftarAplikasiFragment extends Fragment {
     }
 
     private class LoadApplications extends AsyncTask<Void, Void, Void> {
-        private ProgressDialog progress = null;
 
         @Override
         protected Void doInBackground(Void... params) {
+            if (listApps != null) {
+                listApps.clear();
+            } else {
+                listApps = new ArrayList<ApplicationInfo>();
+            }
+
             listApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
             mAdapter = new ItemAdapter(listApps);
 
@@ -238,15 +171,12 @@ public class DaftarAplikasiFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            progress.dismiss();
             mRecView.setAdapter(mAdapter);
             super.onPostExecute(aVoid);
         }
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), null,
-                    "Loading application info...");
             super.onPreExecute();
         }
 

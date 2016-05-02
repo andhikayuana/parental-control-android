@@ -1,10 +1,10 @@
 package com.kodemetro.yuana.parentalcontrol;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,16 +19,18 @@ import android.widget.Toast;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText mEmailView;
-    private EditText mPasswordView;
-    private View mLoginFormView;
-
-    private long backPressedTime = 0;
+    private EditText    mEmailView;
+    private EditText    mPasswordView;
+    private View        mLoginFormView;
+    private Context     mContext;
+    private long        backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mContext = this;
 
         mEmailView      = (EditText) findViewById(R.id.username);
         mPasswordView   = (EditText) findViewById(R.id.password);
@@ -114,10 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-
-            Intent in = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(in);
-            finish();
+            next();
         }
     }
 
@@ -129,6 +128,12 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.equals(getString(R.string.password));
+    }
+
+    private void next(){
+        Intent in = new Intent(mContext, MainActivity.class);
+        startActivity(in);
+        finish();
     }
 
 }

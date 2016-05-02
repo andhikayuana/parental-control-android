@@ -19,7 +19,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private long backPressedTime = 0;
+    private long    backPressedTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
