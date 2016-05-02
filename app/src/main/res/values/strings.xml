@@ -25,4 +25,6 @@
     <string name="username">stmik</string>
     <string name="password">comal</string>
 
+    <string name="materi_prompt">Pilihan Materi berisi tentang topik yang akan ditampilkan pada saat akan membuka sebuah aplikasi</string>
+
 </resources>

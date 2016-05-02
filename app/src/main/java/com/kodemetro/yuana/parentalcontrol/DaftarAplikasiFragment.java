@@ -1,7 +1,8 @@
 package com.kodemetro.yuana.parentalcontrol;
 
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,18 +16,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kodemetro.yuana.parentalcontrol.model.AppInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DaftarAplikasiFragment extends Fragment {
 
-    public  RecyclerView            mRecView;
-    public LoadApplications         loadApplicationsTask;
+    public  RecyclerView        mRecView;
+    public LoadApplications     loadApplicationsTask = null;
 
-    private List<ApplicationInfo>   listApps;
-    private ItemAdapter             mAdapter;
-    private PackageManager          packageManager;
-    private Context                 mContext;
+    private List<AppInfo>       listApps = null;
+    private ItemAdapter         mAdapter;
+    private PackageManager      packageManager = null;
+    private Context             mContext;
+    private ProgressDialog      progress = null;
 
 
     public DaftarAplikasiFragment() {
@@ -62,12 +66,6 @@ public class DaftarAplikasiFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mRecView.setAdapter(mAdapter);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 /*        if (context instanceof OnFragmentInteractionListener) {
@@ -81,6 +79,29 @@ public class DaftarAplikasiFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        progress.dismiss();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        progress.dismiss();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        progress.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -106,9 +127,9 @@ public class DaftarAplikasiFragment extends Fragment {
 
     public class ItemAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener{
 
-        public List<ApplicationInfo> mApp;
+        public List<AppInfo> mApp;
 
-        ItemAdapter(List<ApplicationInfo> itemApp){
+        ItemAdapter(List<AppInfo> itemApp){
             this.mApp = itemApp;
 
         }
@@ -128,11 +149,11 @@ public class DaftarAplikasiFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            ApplicationInfo la = mApp.get(position);
+            AppInfo la = mApp.get(position);
 
-            holder.txtName.setText(la.loadLabel(packageManager));
-            holder.txtDesc.setText(la.packageName);
-            holder.imgIcon.setImageDrawable(la.loadIcon(packageManager));
+            holder.txtName.setText(la.getAppName());
+            holder.txtDesc.setText(la.getVersionName());
+            holder.imgIcon.setImageDrawable(la.getAppIcon());
 
             holder.root.setOnClickListener(this);
         }
@@ -152,14 +173,31 @@ public class DaftarAplikasiFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... params) {
-            if (listApps != null) {
-                listApps.clear();
-            } else {
-                listApps = new ArrayList<ApplicationInfo>();
-            }
+            try{
+                if (listApps != null){
+                    listApps.clear();
+                }
+                else{
+                    listApps = new ArrayList<AppInfo>();
+                }
 
-            listApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-            mAdapter = new ItemAdapter(listApps);
+                List<PackageInfo> packages = packageManager.getInstalledPackages(0);
+                for (PackageInfo pkgInfo : packages){
+                    AppInfo tmpInfo = new AppInfo();
+                    tmpInfo.setAppName(pkgInfo.applicationInfo.loadLabel(packageManager).toString());
+                    tmpInfo.setPackageName(pkgInfo.packageName);
+                    tmpInfo.setVersionCode(pkgInfo.versionCode);
+                    tmpInfo.setVersionName(pkgInfo.versionName);
+                    tmpInfo.setAppIcon(pkgInfo.applicationInfo.loadIcon(packageManager));
+                    tmpInfo.print();
+                    listApps.add(tmpInfo);
+                }
+
+                mAdapter = new ItemAdapter(listApps);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
             return null;
         }
@@ -171,12 +209,15 @@ public class DaftarAplikasiFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            progress.dismiss();
             mRecView.setAdapter(mAdapter);
             super.onPostExecute(aVoid);
         }
 
         @Override
         protected void onPreExecute() {
+            progress = ProgressDialog.show(getActivity(), null,
+                    "Loading application info...");
             super.onPreExecute();
         }
 

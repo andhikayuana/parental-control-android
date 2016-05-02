@@ -4,10 +4,40 @@
     android:layout_height="match_parent"
     tools:context="com.kodemetro.yuana.parentalcontrol.MateriFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="halo ini materi ya haha :D" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/materi_prompt"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkMatematika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Matematika"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/checkInggris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bahasa Inggris"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:buttonTint="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
 
 </FrameLayout>

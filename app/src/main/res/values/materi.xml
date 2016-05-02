@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="matematika">
+        <item>{"pertanyaan":"Berapa hasil dari 5 x 5 ?","jawaban":"25"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 5 x 6 ?","jawaban":"30"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 5 x 7 ?","jawaban":"35"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 5 x 8 ?","jawaban":"40"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 5 x 9 ?","jawaban":"45"}</item>
+
+        <item>{"pertanyaan":"Berapa hasil dari 6 x 5 ?","jawaban":"30"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 6 x 6 ?","jawaban":"36"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 6 x 7 ?","jawaban":"42"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 6 x 8 ?","jawaban":"48"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 6 x 9 ?","jawaban":"54"}</item>
+
+        <item>{"pertanyaan":"Berapa hasil dari 7 x 5 ?","jawaban":"35"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 7 x 6 ?","jawaban":"42"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 7 x 7 ?","jawaban":"49"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 7 x 8 ?","jawaban":"56"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 7 x 9 ?","jawaban":"63"}</item>
+
+        <item>{"pertanyaan":"Berapa hasil dari 8 x 5 ?","jawaban":"40"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 8 x 6 ?","jawaban":"48"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 8 x 7 ?","jawaban":"56"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 8 x 8 ?","jawaban":"64"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 8 x 9 ?","jawaban":"72"}</item>
+
+        <item>{"pertanyaan":"Berapa hasil dari 9 x 5 ?","jawaban":"45"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 9 x 6 ?","jawaban":"54"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 9 x 7 ?","jawaban":"63"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 9 x 8 ?","jawaban":"72"}</item>
+        <item>{"pertanyaan":"Berapa hasil dari 9 x 9 ?","jawaban":"81"}</item>
+
+    </string-array>
+
+    <string-array name="bahasa_inggris">
+        <item>{"pertanyaan":"Apa bahasa inggris dari peta ?","jawaban":"Map"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari kucing ?","jawaban":"Cat"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari pohon ?","jawaban":"Tree"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari buku ?","jawaban":"Book"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari penggaris ?","jawaban":"Ruler"}</item>
+
+        <item>{"pertanyaan":"Apa bahasa inggris dari mobil ?","jawaban":"Car"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari wajah ?","jawaban":"Face"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari mata ?","jawaban":"Eye"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari telinga ?","jawaban":"Ear"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari kuda ?","jawaban":"Horse"}</item>
+
+        <item>{"pertanyaan":"Apa bahasa inggris dari jendela ?","jawaban":"Window"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari pisang ?","jawaban":"Banana"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari ayam ?","jawaban":"Chicken"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari semangka ?","jawaban":"Watermelon"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari bebek ?","jawaban":"Duck"}</item>
+
+        <item>{"pertanyaan":"Apa bahasa inggris dari hujan ?","jawaban":"Rain"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari bulan ?","jawaban":"Moon"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari bintang ?","jawaban":"Star"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari kelinci ?","jawaban":"Rabbit"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari pintu ?","jawaban":"Door"}</item>
+
+        <item>{"pertanyaan":"Apa bahasa inggris dari sepatu ?","jawaban":"Shoes"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari batu ?","jawaban":"Stone"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari angin ?","jawaban":"Wind"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari api ?","jawaban":"Fire"}</item>
+        <item>{"pertanyaan":"Apa bahasa inggris dari air ?","jawaban":"Water"}</item>
+
+    </string-array>
+</resources>

@@ -26,22 +26,26 @@
                 android:src="@drawable/ic_list"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtName"
                 android:layout_toRightOf="@+id/imgIcon"
                 android:layout_alignParentTop="true"
                 android:text="Judul Alikasi"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtDesc"
                 android:layout_toRightOf="@+id/imgIcon"
                 android:layout_below="@+id/txtName"
                 android:text="Deskripsinya"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
 
         </RelativeLayout>
