@@ -1,8 +1,11 @@
 package com.kodemetro.yuana.parentalcontrol;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,21 +42,11 @@ public class DaftarAplikasiFragment extends Fragment {
 
     public RecyclerView mRecView;
 
-    private List<ListApp> listApps;
+    private List<ApplicationInfo> listApps;
     private ItemAdapter mAdapter;
 
     private PackageManager packageManager = null;
 
-    class ListApp {
-        String name, desc;
-        int imgIcon;
-
-        ListApp(String name, String desc, int imgIcon){
-            this.name       = name;
-            this.desc       = desc;
-            this.imgIcon    = imgIcon;
-        }
-    }
 
     public DaftarAplikasiFragment() {
         // Required empty public constructor
@@ -85,6 +77,10 @@ public class DaftarAplikasiFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        packageManager = getActivity().getPackageManager();
+
+        new LoadApplications().execute();
     }
 
     @Override
@@ -99,7 +95,7 @@ public class DaftarAplikasiFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
 
         mRecView.setLayoutManager(llm);
-
+/*
         listApps = new ArrayList<>();
         listApps.add(new ListApp("Nama aplikasi 1", "Deskripsi aplikasi 1", R.drawable.ic_content));
         listApps.add(new ListApp("Nama aplikasi 2", "Deskripsi aplikasi 2", R.drawable.ic_help));
@@ -114,8 +110,8 @@ public class DaftarAplikasiFragment extends Fragment {
         listApps.add(new ListApp("Nama aplikasi 11", "Deskripsi aplikasi 1", R.drawable.ic_help));
         listApps.add(new ListApp("Nama aplikasi 12", "Deskripsi aplikasi 12", R.drawable.ic_list));
 
-        mAdapter = new ItemAdapter(listApps);
-        mRecView.setAdapter(mAdapter);
+        mAdapter = new ItemAdapter(listApps); */
+//        mRecView.setAdapter(mAdapter);
 
         return root;
     }
@@ -182,9 +178,9 @@ public class DaftarAplikasiFragment extends Fragment {
 
     public class ItemAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener{
 
-        public List<ListApp> mApp;
+        public List<ApplicationInfo> mApp;
 
-        ItemAdapter(List<ListApp> itemApp){
+        ItemAdapter(List<ApplicationInfo> itemApp){
             this.mApp = itemApp;
 
         }
@@ -204,11 +200,11 @@ public class DaftarAplikasiFragment extends Fragment {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
 
-            ListApp la = listApps.get(position);
+            ApplicationInfo la = mApp.get(position);
 
-            holder.txtName.setText(la.name);
-            holder.txtDesc.setText(la.desc);
-            holder.imgIcon.setImageResource(la.imgIcon);
+            holder.txtName.setText(la.loadLabel(packageManager));
+            holder.txtDesc.setText(la.packageName);
+            holder.imgIcon.setImageDrawable(la.loadIcon(packageManager));
 
             holder.root.setOnClickListener(this);
         }
@@ -221,6 +217,42 @@ public class DaftarAplikasiFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Toast.makeText(getActivity().getApplicationContext(), "Halo", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class LoadApplications extends AsyncTask<Void, Void, Void> {
+        private ProgressDialog progress = null;
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            listApps = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            mAdapter = new ItemAdapter(listApps);
+
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            progress.dismiss();
+            mRecView.setAdapter(mAdapter);
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(getActivity(), null,
+                    "Loading application info...");
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
         }
     }
 }
