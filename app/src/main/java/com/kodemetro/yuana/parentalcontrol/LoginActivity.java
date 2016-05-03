@@ -1,7 +1,7 @@
 package com.kodemetro.yuana.parentalcontrol;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -22,15 +22,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText    mEmailView;
     private EditText    mPasswordView;
     private View        mLoginFormView;
-    private Context     mContext;
     private long        backPressedTime = 0;
+    private SharedPreferences sPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mContext = this;
+        sPref = ParentalApplication.getInstance().getSharedPreferences();
+
+        if (sPref.contains("login") && sPref.getBoolean("login",false)==true){
+            next();
+        }
 
         mEmailView      = (EditText) findViewById(R.id.username);
         mPasswordView   = (EditText) findViewById(R.id.password);
@@ -116,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            sPref.edit().putBoolean("login", true).commit();
             next();
         }
     }
@@ -131,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void next(){
-        Intent in = new Intent(mContext, MainActivity.class);
+        Intent in = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(in);
         finish();
     }

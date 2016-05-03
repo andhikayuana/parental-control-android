@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-//                            Toast.makeText(getApplicationContext(), "ini keluar", Toast.LENGTH_SHORT).show();
+                            ParentalApplication.getInstance().logout();
                             Intent in = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(in);
                             finish();
