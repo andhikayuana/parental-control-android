@@ -2,6 +2,7 @@ package com.kodemetro.yuana.parentalcontrol;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -189,6 +190,11 @@ public class DaftarAplikasiFragment extends Fragment {
 
                 List<PackageInfo> packages = packageManager.getInstalledPackages(0);
                 for (PackageInfo pkgInfo : packages){
+
+                    if((pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)==1){
+                        continue;
+                    }
+
                     AppInfo tmpInfo = new AppInfo();
                     tmpInfo.setAppName(pkgInfo.applicationInfo.loadLabel(packageManager).toString());
                     tmpInfo.setPackageName(pkgInfo.packageName);
