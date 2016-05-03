@@ -155,18 +155,24 @@ public class DaftarAplikasiFragment extends Fragment {
             holder.txtDesc.setText(la.getVersionName());
             holder.imgIcon.setImageDrawable(la.getAppIcon());
 
+            holder.root.setTag(position);
+
             holder.root.setOnClickListener(this);
         }
 
         @Override
         public int getItemCount() {
-            return listApps.size();
+            return mApp.size();
         }
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity().getApplicationContext(), "Halo", Toast.LENGTH_SHORT).show();
+            AppInfo i = mApp.get((int) view.getTag());
+
+            Toast.makeText(mContext, String.valueOf(i), Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
     private class LoadApplications extends AsyncTask<Void, Void, Void> {
@@ -211,13 +217,13 @@ public class DaftarAplikasiFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             progress.dismiss();
             mRecView.setAdapter(mAdapter);
+
             super.onPostExecute(aVoid);
         }
 
         @Override
         protected void onPreExecute() {
-            progress = ProgressDialog.show(getActivity(), null,
-                    "Loading application info...");
+            progress = ProgressDialog.show(getActivity(), null, "Loading...");
             super.onPreExecute();
         }
 
