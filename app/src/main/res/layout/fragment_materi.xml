@@ -35,8 +35,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="30dp"
             android:padding="10dp"
-            android:textSize="20sp"
-            android:buttonTint="@color/colorPrimaryDark"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
