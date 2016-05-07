@@ -15,11 +15,17 @@ public class AppInfo implements Serializable {
     public String versionName;
     public int versionCode = 0;
     public Drawable appIcon = null;
+    public boolean isSelected;
+
+    public AppInfo(){
+
+    }
 
     public void print(){
         Log.v("app", "Name: " + appName + " Package: " + packageName);
         Log.v("app", "Name: " + appName + " verionName: " + versionName);
         Log.v("app", "Name: " + appName + " versionCode: " + versionCode);
+        Log.v("app", "Name: " + appName + " isSelected: " + isSelected);
     }
 
     public String getAppName(){
@@ -60,5 +66,13 @@ public class AppInfo implements Serializable {
 
     public void setAppIcon(Drawable appIcon){
         this.appIcon = appIcon;
+    }
+
+    public void setSelected(boolean isSelected){
+        this.isSelected = isSelected;
+    }
+
+    public boolean isSelected(){
+        return isSelected;
     }
 }

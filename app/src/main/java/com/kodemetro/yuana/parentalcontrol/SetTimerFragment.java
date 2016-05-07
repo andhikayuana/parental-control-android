@@ -1,62 +1,34 @@
 package com.kodemetro.yuana.parentalcontrol;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SetTimerFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SetTimerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SetTimerFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private RadioGroup radioTimer;
+    private RadioButton radio10, radio15, radio20, radio25;
+    private int idRadio;
+    private SharedPreferences sPref;
 
     public SetTimerFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SetTimerFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SetTimerFragment newInstance(String param1, String param2) {
-        SetTimerFragment fragment = new SetTimerFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -64,45 +36,74 @@ public class SetTimerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_set_timer, container, false);
+        View root = inflater.inflate(R.layout.fragment_set_timer, container, false);
+
+        sPref = ParentalApplication.getInstance().getSharedPreferences();
+
+        radioTimer  = (RadioGroup) root.findViewById(R.id.radioTimer);
+        radio10     = (RadioButton) root.findViewById(R.id.btn10);
+        radio15     = (RadioButton) root.findViewById(R.id.btn15);
+        radio20     = (RadioButton) root.findViewById(R.id.btn20);
+        radio25     = (RadioButton) root.findViewById(R.id.btn25);
+
+        switch (sPref.getInt("timer",10)){
+            case 10:
+                idRadio = R.id.btn10;
+                break;
+            case 15:
+                idRadio = R.id.btn15;
+                break;
+            case 20:
+                idRadio = R.id.btn20;
+                break;
+            case 25:
+                idRadio = R.id.btn25;
+                break;
+            default:
+                break;
+        }
+
+        radioTimer.check(idRadio);
+
+        radioTimer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.btn10){
+                    sPref.edit().putInt("timer", 10).commit();
+                }
+                else if (checkedId == R.id.btn15){
+                    sPref.edit().putInt("timer", 15).commit();
+                }
+                else if (checkedId == R.id.btn20){
+                    sPref.edit().putInt("timer", 20).commit();
+                }
+                else if (checkedId == R.id.btn25){
+                    sPref.edit().putInt("timer", 25).commit();
+                }
+
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Anda telah mengatur timer "+sPref.getInt("timer",10)+" menit",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+
+
+        return root;
+
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

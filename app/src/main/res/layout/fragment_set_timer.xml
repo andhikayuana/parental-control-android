@@ -1,13 +1,47 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kodemetro.yuana.parentalcontrol.SetTimerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="halo ini set timer ya" />
+        android:layout_height="wrap_content"
+        android:id="@+id/radioTimer"
+        android:orientation="vertical">
 
-</FrameLayout>
+            <RadioButton
+                android:id="@+id/btn10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 Menit"
+                android:padding="10dp"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/btn15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15 Menit"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <RadioButton
+                android:id="@+id/btn20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20 Menit"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <RadioButton
+                android:id="@+id/btn25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25 Menit"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+    </RadioGroup>
+
+</LinearLayout>

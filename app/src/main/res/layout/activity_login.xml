@@ -47,7 +47,8 @@
                     android:hint="@string/prompt_username"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -65,7 +66,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:textColor="@android:color/white"/>
 
             </android.support.design.widget.TextInputLayout>
 

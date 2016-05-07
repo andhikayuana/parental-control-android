@@ -196,7 +196,8 @@ public class DaftarAplikasiFragment extends Fragment {
                     tmpInfo.setVersionCode(pkgInfo.versionCode);
                     tmpInfo.setVersionName(pkgInfo.versionName);
                     tmpInfo.setAppIcon(pkgInfo.applicationInfo.loadIcon(packageManager));
-//                    tmpInfo.print();
+                    tmpInfo.setSelected(false);
+                    tmpInfo.print();
                     listApps.add(tmpInfo);
                 }
                 mAdapter = new ItemAdapter(listApps);
