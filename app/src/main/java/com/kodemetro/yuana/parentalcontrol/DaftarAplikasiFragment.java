@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import com.kodemetro.yuana.parentalcontrol.model.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DaftarAplikasiFragment extends Fragment {
 
@@ -110,6 +113,7 @@ public class DaftarAplikasiFragment extends Fragment {
         public TextView txtName;
         public TextView txtDesc;
         public ImageView imgIcon;
+        public CheckBox checkApp;
 
         public View root;
 
@@ -121,7 +125,7 @@ public class DaftarAplikasiFragment extends Fragment {
             txtName     = (TextView) v.findViewById(R.id.txtName);
             txtDesc     = (TextView) v.findViewById(R.id.txtDesc);
             imgIcon     = (ImageView)v.findViewById(R.id.imgIcon);
-
+            checkApp    = (CheckBox) v.findViewById(R.id.checkApp);
 
         }
     }
@@ -148,15 +152,28 @@ public class DaftarAplikasiFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
 
-            AppInfo la = mApp.get(position);
+            final  AppInfo la   = mApp.get(position);
 
             holder.txtName.setText(la.getAppName());
             holder.txtDesc.setText(la.getVersionName());
             holder.imgIcon.setImageDrawable(la.getAppIcon());
+            holder.checkApp.setChecked(la.isSelected());
 
             holder.root.setTag(position);
+            holder.checkApp.setTag(la);
+
+            holder.checkApp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckBox cb = (CheckBox) v;
+                    AppInfo app = (AppInfo) cb.getTag();
+
+                    app.setSelected(cb.isChecked());
+                    la.setSelected(cb.isChecked());
+                }
+            });
 
             holder.root.setOnClickListener(this);
         }

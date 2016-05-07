@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="10dp">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/card_view">
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,18 +21,18 @@
                 android:src="@drawable/ic_list"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtName"
                 android:layout_toRightOf="@+id/imgIcon"
                 android:layout_alignParentTop="true"
-                android:text="Judul Alikasi"
+                android:text="Judul Aplikasi lorem ipsum"
                 android:textSize="20sp"
                 android:ellipsize="end"
                 android:maxLines="1"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtDesc"
                 android:layout_toRightOf="@+id/imgIcon"
@@ -46,10 +41,16 @@
                 android:textSize="15sp"
                 android:ellipsize="end"
                 android:maxLines="1"/>
+            
+            <CheckBox
+                android:id="@+id/checkApp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"/>
 
 
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
-</LinearLayout>
