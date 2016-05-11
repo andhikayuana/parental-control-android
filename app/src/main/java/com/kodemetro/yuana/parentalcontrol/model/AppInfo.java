@@ -75,4 +75,9 @@ public class AppInfo implements Serializable {
     public boolean isSelected(){
         return isSelected;
     }
+
+    @Override
+    public String toString() {
+        return this.packageName + " - " + this.isSelected;
+    }
 }

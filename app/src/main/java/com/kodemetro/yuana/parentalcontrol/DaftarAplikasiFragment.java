@@ -2,6 +2,7 @@ package com.kodemetro.yuana.parentalcontrol;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -9,12 +10,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ import com.kodemetro.yuana.parentalcontrol.model.AppInfo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class DaftarAplikasiFragment extends Fragment {
 
@@ -35,6 +33,7 @@ public class DaftarAplikasiFragment extends Fragment {
     private PackageManager      packageManager = null;
     private Context             mContext;
     private ProgressDialog      progress = null;
+    private SharedPreferences   sPref;
 
 
     public DaftarAplikasiFragment() {
@@ -46,6 +45,8 @@ public class DaftarAplikasiFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mContext = getActivity().getApplicationContext();
+
+        sPref = ParentalApplication.getInstance().getSharedPreferences();
 
         packageManager = mContext.getPackageManager();
 
@@ -72,12 +73,6 @@ public class DaftarAplikasiFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-/*        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
@@ -152,7 +147,7 @@ public class DaftarAplikasiFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
 
             final  AppInfo la   = mApp.get(position);
 
@@ -172,10 +167,26 @@ public class DaftarAplikasiFragment extends Fragment {
 
                     app.setSelected(cb.isChecked());
                     la.setSelected(cb.isChecked());
+
+                    saveListApps();
                 }
             });
 
             holder.root.setOnClickListener(this);
+        }
+
+        public void saveListApps(){
+
+            StringBuilder sb = new StringBuilder();
+
+            for (AppInfo app : mApp){
+                if (app.isSelected == true){
+                    sb.append(app.getPackageName()).append(";");
+                }
+            }
+
+            sPref.edit().putString("apps_to_lock", sb.toString()).commit();
+
         }
 
         @Override
@@ -189,7 +200,6 @@ public class DaftarAplikasiFragment extends Fragment {
 
             Toast.makeText(mContext, String.valueOf(i), Toast.LENGTH_SHORT).show();
         }
-
 
     }
 
@@ -205,6 +215,8 @@ public class DaftarAplikasiFragment extends Fragment {
                     listApps = new ArrayList<AppInfo>();
                 }
 
+                String[] apps_to_lock = sPref.getString("apps_to_lock", "").split(";");
+
                 List<PackageInfo> packages = packageManager.getInstalledPackages(0);
                 for (PackageInfo pkgInfo : packages){
                     AppInfo tmpInfo = new AppInfo();
@@ -214,6 +226,13 @@ public class DaftarAplikasiFragment extends Fragment {
                     tmpInfo.setVersionName(pkgInfo.versionName);
                     tmpInfo.setAppIcon(pkgInfo.applicationInfo.loadIcon(packageManager));
                     tmpInfo.setSelected(false);
+
+                    for (String lockApp : apps_to_lock){
+                        if (lockApp.equals(pkgInfo.packageName)){
+                            tmpInfo.setSelected(true);
+                        }
+                    }
+
                     tmpInfo.print();
                     listApps.add(tmpInfo);
                 }
