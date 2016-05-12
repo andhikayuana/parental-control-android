@@ -64,6 +64,7 @@ public class DaftarAplikasiFragment extends Fragment {
         mRecView.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(mContext);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
 
         mRecView.setLayoutManager(llm);
 
@@ -203,6 +204,22 @@ public class DaftarAplikasiFragment extends Fragment {
 
     }
 
+    public boolean isSystemApp(String packageName) {
+        try {
+            // Get packageinfo for target application
+            PackageInfo targetPkgInfo = packageManager.getPackageInfo(
+                    packageName, PackageManager.GET_SIGNATURES);
+            // Get packageinfo for system package
+            PackageInfo sys = packageManager.getPackageInfo(
+                    "android", PackageManager.GET_SIGNATURES);
+            // Match both packageinfo for there signatures
+            return (targetPkgInfo != null && targetPkgInfo.signatures != null && sys.signatures[0]
+                    .equals(targetPkgInfo.signatures[0]));
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
     private class LoadApplications extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -219,6 +236,11 @@ public class DaftarAplikasiFragment extends Fragment {
 
                 List<PackageInfo> packages = packageManager.getInstalledPackages(0);
                 for (PackageInfo pkgInfo : packages){
+
+                    if (isSystemApp(pkgInfo.packageName)){
+                        continue;
+                    }
+
                     AppInfo tmpInfo = new AppInfo();
                     tmpInfo.setAppName(pkgInfo.applicationInfo.loadLabel(packageManager).toString());
                     tmpInfo.setPackageName(pkgInfo.packageName);
