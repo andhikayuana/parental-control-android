@@ -27,15 +27,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".LockScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme" />
+
         <service
             android:name=".service.ParentalService"
             android:exported="true" />
 
-        <activity
-            android:name=".LockScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_lock_screen"
-            android:theme="@style/FullscreenTheme"></activity>
+
     </application>
 
 </manifest>
