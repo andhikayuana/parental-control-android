@@ -2,14 +2,13 @@ package com.kodemetro.yuana.parentalcontrol;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 
 public class MateriFragment extends Fragment {
@@ -38,6 +37,10 @@ public class MateriFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_materi, container, false);
 
         sPref = ParentalApplication.getInstance().getSharedPreferences();
+
+        String a = ParentalApplication.getInstance().getQA();
+
+        Log.i("andhika", a);
 
         mCheckMatematika = (AppCompatCheckBox) root.findViewById(R.id.checkMatematika);
         mCheckInggris    = (AppCompatCheckBox) root.findViewById(R.id.checkInggris);
