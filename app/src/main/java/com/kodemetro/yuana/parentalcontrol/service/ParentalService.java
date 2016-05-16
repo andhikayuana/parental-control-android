@@ -8,6 +8,9 @@ import android.util.Log;
 
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Created by yuana on 5/3/16.
+ */
 public class ParentalService extends Service {
 
     private final String TAG = "ParentalService";

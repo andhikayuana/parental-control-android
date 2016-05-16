@@ -11,34 +11,34 @@
         android:orientation="vertical">
 
             <RadioButton
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1 Menit"
+                android:padding="10dp"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/btn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 Menit"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+
+            <RadioButton
                 android:id="@+id/btn10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 Menit"
                 android:padding="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
 
             <RadioButton
                 android:id="@+id/btn15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="15 Menit"
-                android:padding="10dp"
-                android:textSize="20sp"/>
-
-            <RadioButton
-                android:id="@+id/btn20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20 Menit"
-                android:padding="10dp"
-                android:textSize="20sp"/>
-
-            <RadioButton
-                android:id="@+id/btn25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="25 Menit"
                 android:padding="10dp"
                 android:textSize="20sp"/>
 

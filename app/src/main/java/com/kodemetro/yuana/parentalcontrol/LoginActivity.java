@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * A login screen that offers login via email/password.
+ * Created by yuana on 5/3/16.
  */
 public class LoginActivity extends AppCompatActivity {
 

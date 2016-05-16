@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
 
+/**
+ * Created by yuana on 5/3/16.
+ */
 public class MateriFragment extends Fragment {
 
     private AppCompatCheckBox mCheckMatematika;
@@ -37,10 +41,6 @@ public class MateriFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_materi, container, false);
 
         sPref = ParentalApplication.getInstance().getSharedPreferences();
-
-        String a = ParentalApplication.getInstance().getQA();
-
-        Log.i("andhika", a);
 
         mCheckMatematika = (AppCompatCheckBox) root.findViewById(R.id.checkMatematika);
         mCheckInggris    = (AppCompatCheckBox) root.findViewById(R.id.checkInggris);

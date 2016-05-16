@@ -13,10 +13,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
+/**
+ * Created by yuana on 5/3/16.
+ */
 public class SetTimerFragment extends Fragment {
 
     private RadioGroup radioTimer;
-    private RadioButton radio10, radio15, radio20, radio25;
+    private RadioButton radio1, radio5, radio10, radio15;
     private int idRadio;
     private SharedPreferences sPref;
 
@@ -41,23 +44,23 @@ public class SetTimerFragment extends Fragment {
         sPref = ParentalApplication.getInstance().getSharedPreferences();
 
         radioTimer  = (RadioGroup) root.findViewById(R.id.radioTimer);
+        radio1     = (RadioButton) root.findViewById(R.id.btn1);
+        radio5     = (RadioButton) root.findViewById(R.id.btn5);
         radio10     = (RadioButton) root.findViewById(R.id.btn10);
         radio15     = (RadioButton) root.findViewById(R.id.btn15);
-        radio20     = (RadioButton) root.findViewById(R.id.btn20);
-        radio25     = (RadioButton) root.findViewById(R.id.btn25);
 
-        switch (sPref.getInt("timer",10)){
+        switch (sPref.getInt("timer",1)){
+            case 1:
+                idRadio = R.id.btn1;
+                break;
+            case 5:
+                idRadio = R.id.btn5;
+                break;
             case 10:
                 idRadio = R.id.btn10;
                 break;
             case 15:
                 idRadio = R.id.btn15;
-                break;
-            case 20:
-                idRadio = R.id.btn20;
-                break;
-            case 25:
-                idRadio = R.id.btn25;
                 break;
             default:
                 break;
@@ -68,21 +71,21 @@ public class SetTimerFragment extends Fragment {
         radioTimer.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.btn10){
+                if (checkedId == R.id.btn1){
+                    sPref.edit().putInt("timer", 1).commit();
+                }
+                else if (checkedId == R.id.btn5){
+                    sPref.edit().putInt("timer", 5).commit();
+                }
+                else if (checkedId == R.id.btn10){
                     sPref.edit().putInt("timer", 10).commit();
                 }
                 else if (checkedId == R.id.btn15){
                     sPref.edit().putInt("timer", 15).commit();
                 }
-                else if (checkedId == R.id.btn20){
-                    sPref.edit().putInt("timer", 20).commit();
-                }
-                else if (checkedId == R.id.btn25){
-                    sPref.edit().putInt("timer", 25).commit();
-                }
 
                 Toast.makeText(getActivity().getApplicationContext(),
-                        "Anda telah mengatur timer "+sPref.getInt("timer",10)+" menit",
+                        "Anda telah mengatur timer "+sPref.getInt("timer",1)+" menit",
                         Toast.LENGTH_SHORT).show();
             }
         });

@@ -23,6 +23,9 @@ import com.kodemetro.yuana.parentalcontrol.model.AppInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by yuana on 5/3/16.
+ */
 public class DaftarAplikasiFragment extends Fragment {
 
     public  RecyclerView        mRecView;

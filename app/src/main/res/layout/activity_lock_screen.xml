@@ -1,50 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="#0099cc"
-    tools:context="com.kodemetro.yuana.parentalcontrol.LockScreenActivity">
+    tools:context="com.kodemetro.yuana.parentalcontrol.LockScreenActivity"
+    android:id="@+id/fullscreen_content"
+    android:fitsSystemWindows="true">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="Pertanyaan?"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
+        <TextView
+            android:paddingBottom="50dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:id="@+id/txtQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:keepScreenOn="true"
+            android:text="Apa bahasa Inggris dari penggaris ?"
+            android:textColor="@android:color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Jawab" />
+        <EditText
+            android:id="@+id/txtAnswer"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:singleLine="true"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@android:color/white"
+            android:imeOptions="actionUnspecified"/>
 
-        </LinearLayout>
-    </FrameLayout>
+        <Button
+            android:id="@+id/btnStoreAnswer"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_width="309dp"
+            android:layout_height="60dp"
+            android:text="Jawab"/>
 
-</FrameLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.kodemetro.yuana.parentalcontrol.service.ParentalService;
 
+/**
+ * Created by yuana on 5/3/16.
+ */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
