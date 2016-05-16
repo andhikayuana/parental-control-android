@@ -68,6 +68,7 @@ public class DaftarAplikasiFragment extends Fragment {
 
         mRecView.setLayoutManager(llm);
 
+
         return root;
     }
 
@@ -276,7 +277,6 @@ public class DaftarAplikasiFragment extends Fragment {
         protected void onPostExecute(Void aVoid) {
             progress.dismiss();
             mRecView.setAdapter(mAdapter);
-
             super.onPostExecute(aVoid);
         }
 

@@ -3,4 +3,6 @@
     <color name="colorPrimary">@android:color/holo_green_light</color>
     <color name="colorPrimaryDark">@android:color/holo_green_dark</color>
     <color name="colorAccent">@android:color/holo_green_dark</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
