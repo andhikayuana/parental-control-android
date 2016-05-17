@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission-sdk-23 android:name="android.permission.READ_LOGS"/>
+    <uses-permission-sdk-23 android:name="android.permission.GET_TASKS" />
+    <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".ParentalApplication"
         android:allowBackup="true"

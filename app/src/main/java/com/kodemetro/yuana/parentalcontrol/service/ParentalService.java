@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -15,8 +16,11 @@ import com.kodemetro.yuana.parentalcontrol.LockScreenActivity;
 import com.kodemetro.yuana.parentalcontrol.MainActivity;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -56,6 +60,34 @@ public class ParentalService extends Service {
 
         Log.d(TAG, "Started");
 
+        Timer timer  =  new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
+
+                for (int i = 0; i < runningAppProcessInfo.size(); i++) {
+//                    if(runningAppProcessInfo.get(i).processName.equals("com.android.contacts")) {
+                        Intent homeIntent = new Intent();
+                        homeIntent.setAction(Intent.ACTION_MAIN);
+                        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        homeIntent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(homeIntent);
+
+                        //screenlock
+                        Intent intent = new Intent(ParentalService.this, LockScreenActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+//                    }
+//                    else{
+//                        Log.d(TAG, "tidak masuk ya");
+//                    }
+                }
+            }
+        },2000,3000);
 
         return START_STICKY;
     }
