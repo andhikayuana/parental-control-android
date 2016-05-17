@@ -22,6 +22,7 @@ public class LockScreenActivity extends AppCompatActivity {
     private TextView txtQuestion;
     private EditText txtAnswer;
     private String mQuestion, mAnswer;
+    private JSONObject qa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +45,7 @@ public class LockScreenActivity extends AppCompatActivity {
         txtAnswer       = (EditText) findViewById(R.id.txtAnswer);
         btnStoreAnswer  = (Button)   findViewById(R.id.btnStoreAnswer);
 
-        JSONObject  qa = ParentalApplication.getInstance().getQA();
-
-        try{
-            mQuestion   = qa.getString("pertanyaan");
-            mAnswer     = qa.getString("jawaban");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        txtQuestion.setText(mQuestion);
+        getQA();
 
         btnStoreAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,11 +60,26 @@ public class LockScreenActivity extends AppCompatActivity {
                     txtAnswer.setText("");
                     Toast.makeText(getApplicationContext(),
                             "Jawaban salah, Masukkan lagi !", Toast.LENGTH_SHORT).show();
+                    getQA();
 
                 }
             }
         });
 
+    }
+
+    private void getQA(){
+        qa = ParentalApplication.getInstance().getQA();
+
+        try{
+            mQuestion   = qa.getString("pertanyaan");
+            mAnswer     = qa.getString("jawaban");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        txtQuestion.setText(mQuestion);
     }
 
     @Override
