@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.test.suitebuilder.annotation.Suppress;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.kodemetro.yuana.parentalcontrol.LockScreenActivity;
 import com.kodemetro.yuana.parentalcontrol.MainActivity;
+import com.kodemetro.yuana.parentalcontrol.ParentalApplication;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +24,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by yuana on 5/3/16.
@@ -31,7 +36,12 @@ public class ParentalService extends Service {
     private final String TAG = "ParentalService";
     private ActivityManager activityManager = null;
     private LockerThread lockerThread;
+//    private SetTimerLock setTimerLock;
+    private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
     private boolean isInterrupted;
+    private String excludeApp = null;
+    private SharedPreferences sPref = ParentalApplication.getInstance().getSharedPreferences();
+    private String[] apps_to_lock;
 
     public ParentalService() {
     }
@@ -46,12 +56,14 @@ public class ParentalService extends Service {
         super.onCreate();
         Log.i(TAG, "onCreate");
 
+        apps_to_lock = sPref.getString("apps_to_lock", "").split(";");
+
 //        executorService.submit(thread);
 
         isInterrupted = false;
 
-        lockerThread = new LockerThread();
-        lockerThread.start();
+//        lockerThread = new LockerThread();
+//        lockerThread.start();
 
     }
 
@@ -60,36 +72,88 @@ public class ParentalService extends Service {
 
         Log.d(TAG, "Started");
 
+//        setTimerLock = new SetTimerLock();
+
         Timer timer  =  new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                List<ActivityManager.RunningAppProcessInfo> runningAppProcessInfo = am.getRunningAppProcesses();
 
-                for (int i = 0; i < runningAppProcessInfo.size(); i++) {
-//                    if(runningAppProcessInfo.get(i).processName.equals("com.android.contacts")) {
+                @SuppressWarnings("deprecation")
+                String runApp = am.getRunningTasks(1).get(0).topActivity.getPackageName().toString();
+
+                Log.d(TAG, "BEGIN ------------------------");
+
+                Log.d(TAG, "NOW app => " + runApp + " - " +excludeApp);
+
+                for (String lockApp : apps_to_lock) {
+
+                    if (runApp.equals(lockApp) && excludeApp == null) {
+
+                        Log.d(TAG, runApp + " - LOCKED");
+
+                        excludeApp = lockApp;
+
+                        unLockTimer();
+
+//                        setTimerLock.start();
+/*
                         Intent homeIntent = new Intent();
                         homeIntent.setAction(Intent.ACTION_MAIN);
                         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         homeIntent.addCategory(Intent.CATEGORY_HOME);
-                        startActivity(homeIntent);
+                        startActivity(homeIntent);*/
 
                         //screenlock
                         Intent intent = new Intent(ParentalService.this, LockScreenActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                );
                         startActivity(intent);
-//                    }
-//                    else{
-//                        Log.d(TAG, "tidak masuk ya");
-//                    }
+
+                        //todo simpen package di excludeApp : dengan waktu sekian menit
+                        //setelah waktu sekian menit habis, maka masukkan kembali ke apps_lock pref
+                        //cek jika belum jawab, excludeApp diisi null
+                        //bikin handler atau runnable
+
+                    }
+                    else {
+
+                        Log.d(TAG, "NOT LOCKED");
+
+                    }
+
                 }
+
+                Log.d(TAG, "END   ------------------------" + " - " + excludeApp);
+
             }
-        },2000,3000);
+        }, 1000, 1000);
 
         return START_STICKY;
+    }
+
+    private void unLockTimer(){
+
+        Log.d(TAG, "mulai hitung timer");
+
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+
+                if (excludeApp != null) {
+
+                    excludeApp = null;
+                }
+
+            }
+        };
+
+        worker.schedule(task, 20, TimeUnit.SECONDS);
+
+        Log.d(TAG, "selesai timer dan hapus");
     }
 
     @Override
@@ -97,8 +161,28 @@ public class ParentalService extends Service {
         super.onDestroy();
         Log.d(TAG, "Destroyed");
         isInterrupted = true;
-
     }
+/*
+    class SetTimerLock extends Thread {
+        @Override
+        public void run() {
+            super.run();
+
+            Log.d(TAG, "mulai hitung timer");
+
+            if (excludeApp != null) {
+                try {
+                    Thread.sleep(10000);
+                }
+                catch (InterruptedException e){
+                    e.printStackTrace();
+                }
+                excludeApp = null;
+            }
+
+            Log.d(TAG, "selesai timer dan hapus");
+        }
+    }*/
 
     class LockerThread extends Thread{
 
@@ -123,6 +207,8 @@ public class ParentalService extends Service {
             super.run();
             String runPkgName = getTopActivityPkgName();
 
+            Log.d(TAG, "BEGIN ------------------------");
+
             Log.i(TAG, "TopActivity: " + runPkgName);
 
 //            if (excludeProcNames.contains(runPkgName))
@@ -144,6 +230,7 @@ public class ParentalService extends Service {
                 startActivity(intent);
 //            }
 
+            Log.d(TAG, "END ------------------------");
         }
     }
 }
