@@ -19,9 +19,9 @@ public class ParentalApplication extends Application {
     public static ParentalApplication singleton;
     public static String packageName;
 
-    public static final String TAG = "com.kodemetro.parentalcontrol";
-    public static final String STOP_TIMER = TAG + ".STOP_TIMER";
-    public static final String LOCK = TAG + ".LOCK";
+    public static final String TAG = "com.kodemetro.yuana.parentalcontrol.";
+    public static final String STOP_TIMER = TAG + "STOP_TIMER";
+    public static final String LOCK = TAG + "LOCK";
 
     public static ParentalApplication getInstance(){
         return singleton;

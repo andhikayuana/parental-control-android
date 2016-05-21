@@ -3,6 +3,7 @@ package com.kodemetro.yuana.parentalcontrol.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,20 +20,24 @@ public class TimerReceiver extends BroadcastReceiver {
 
     private static final ScheduledExecutorService worker = Executors.newSingleThreadScheduledExecutor();
 
+    private SharedPreferences sPref = ParentalApplication
+            .getInstance()
+            .getSharedPreferences();
+
     public TimerReceiver() {
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        //Receive com.kodemetro.yuana.parentalcontrol.LOCK
-
         Toast.makeText(context, "MASUK di TimerReceiver", Toast.LENGTH_SHORT).show();
 
-        unLockTimer(context);
+        int timer = sPref.getInt("timer",1);
+
+        unLockTimer(context, timer);
     }
 
-    private void unLockTimer(final Context context) {
+    private void unLockTimer(final Context context, int timer) {
 
         Log.d(TAG, "Mulai hitung timer");
 
@@ -45,7 +50,7 @@ public class TimerReceiver extends BroadcastReceiver {
             }
         };
 
-        worker.schedule(task, 8, TimeUnit.SECONDS);
+        worker.schedule(task, timer, TimeUnit.MINUTES);
 
         Log.d(TAG, "Selesai hitung timer");
     }

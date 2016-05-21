@@ -48,7 +48,10 @@ public class ParentalService extends Service {
 
     private String[] apps_to_lock;
 
-    public static boolean lockAgain = false;
+    private boolean lockAgain   = true;
+
+    private String excludeApp   = null;
+    private String appToLock    = null;
 
     private final BroadcastReceiver stopTimerReceiver = new BroadcastReceiver() {
         @Override
@@ -56,12 +59,20 @@ public class ParentalService extends Service {
             String in = intent.getAction();
 
             if (in.equals(ParentalApplication.STOP_TIMER)) {
+
                 Log.d(TAG, "MASUK STOP -> " + in);
-                lockAgain = false;
+
+                lockAgain   = true;
+                excludeApp  = null;
             }
             else if (in.equals(ParentalApplication.LOCK)) {
+
                 Log.d(TAG, "Masuk LOCK lockAgain ganti true");
-                lockAgain = true;
+
+                lockAgain   = false;
+                excludeApp  = appToLock;
+
+                Log.d(TAG, "dari LOCK => " + excludeApp);
             }
         }
     };
@@ -76,8 +87,10 @@ public class ParentalService extends Service {
 
     @Override
     public void onCreate() {
+
+        Log.d(TAG, "onCreate");
+
         super.onCreate();
-        Log.i(TAG, "onCreate");
 
         IntentFilter inFilter = new IntentFilter();
         inFilter.addAction(ParentalApplication.STOP_TIMER);
@@ -106,10 +119,18 @@ public class ParentalService extends Service {
                 Log.d(TAG, "BEGIN ------------------------");
 
                 Log.d(TAG, "NOW app => " + runApp);
+/*
+                Log.d(TAG, "dari scheduler => "+ runApp + " - "  + excludeApp + " - " + lockAgain);
+                Log.d(TAG, "dari 2 => " + appToLock);*/
 
                 for (String lockApp : apps_to_lock) {
 
-                    if (runApp.equals(lockApp) && lockAgain == false) {
+                    //TODO bikin exclude : cek disini
+                    // loop, muncul screen lock ketika tidak ada di exclude
+
+                    if (runApp.equals(lockApp) && lockAgain == true && excludeApp != runApp) {
+
+                        appToLock = runApp;
 
                         Log.d(TAG, runApp + " - LOCKED");
 
@@ -144,8 +165,10 @@ public class ParentalService extends Service {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+
         Log.d(TAG, "Destroyed");
+
+        super.onDestroy();
 
         unregisterReceiver(stopTimerReceiver);
     }
