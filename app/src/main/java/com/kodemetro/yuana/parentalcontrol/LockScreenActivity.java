@@ -63,7 +63,7 @@ public class LockScreenActivity extends AppCompatActivity {
 
                     Intent in = new Intent();
                     in.setAction(ParentalApplication.LOCK);
-                    in.putExtra("lockAgain", false);
+                    in.putExtra("exclude", sPref.getString("exclude",null));
                     sendBroadcast(in);
 
                     finish();

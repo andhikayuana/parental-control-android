@@ -2,14 +2,20 @@ package com.kodemetro.yuana.parentalcontrol;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.DrawableWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import java.io.IOException;
+import java.io.InputStream;
 
 
 /**
@@ -17,47 +23,20 @@ import android.widget.Button;
  */
 public class CaraPakaiFragment extends Fragment {
 
-    private Button btnPreview;
+//    private Button btnPreview;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    private ImageView imgCara1, imgCara2, imgCara3;
 
     public CaraPakaiFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CaraPakaiFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CaraPakaiFragment newInstance(String param1, String param2) {
-        CaraPakaiFragment fragment = new CaraPakaiFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -67,7 +46,7 @@ public class CaraPakaiFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cara_pakai, container, false);
 
-        btnPreview = (Button) root.findViewById(R.id.btnPreview);
+        /*btnPreview = (Button) root.findViewById(R.id.btnPreview);
 
         btnPreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,16 +55,35 @@ public class CaraPakaiFragment extends Fragment {
                 startActivity(new Intent(getActivity().getApplicationContext(),
                         LockScreenActivity.class));
             }
-        });
+        });*/
+
+        imgCara1 = (ImageView) root.findViewById(R.id.imgCara1);
+        imgCara2 = (ImageView) root.findViewById(R.id.imgCara2);
+        imgCara3 = (ImageView) root.findViewById(R.id.imgCara3);
+
+        try {
+            AssetManager assetManager = this.getContext().getAssets();
+
+            InputStream cara1 = assetManager.open("daftar_aplikasi.jpg");
+            InputStream cara2 = assetManager.open("materi.jpg");
+            InputStream cara3 = assetManager.open("set_timer.jpg");
+
+            Drawable d1 = Drawable.createFromStream(cara1, null);
+            Drawable d2 = Drawable.createFromStream(cara2, null);
+            Drawable d3 = Drawable.createFromStream(cara3, null);
+
+            imgCara1.setImageDrawable(d1);
+            imgCara2.setImageDrawable(d2);
+            imgCara3.setImageDrawable(d3);
+
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+
 
         return root;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -102,21 +100,5 @@ public class CaraPakaiFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.kodemetro.yuana.parentalcontrol.ParentalApplication;
-import com.kodemetro.yuana.parentalcontrol.service.ParentalService;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -30,7 +28,7 @@ public class TimerReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Toast.makeText(context, "MASUK di TimerReceiver", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "MASUK di TimerReceiver", Toast.LENGTH_SHORT).show();
 
         int timer = sPref.getInt("timer",1);
 
@@ -51,6 +49,8 @@ public class TimerReceiver extends BroadcastReceiver {
         };
 
         worker.schedule(task, timer, TimeUnit.MINUTES);
+
+        //how to stop this?
 
         Log.d(TAG, "Selesai hitung timer");
     }

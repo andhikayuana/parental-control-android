@@ -51,7 +51,6 @@ public class ParentalService extends Service {
     private boolean lockAgain   = true;
 
     private String excludeApp   = null;
-    private String appToLock    = null;
 
     private final BroadcastReceiver stopTimerReceiver = new BroadcastReceiver() {
         @Override
@@ -67,10 +66,10 @@ public class ParentalService extends Service {
             }
             else if (in.equals(ParentalApplication.LOCK)) {
 
-                Log.d(TAG, "Masuk LOCK lockAgain ganti true");
+                Log.d(TAG, "Masuk LOCK lockAgain ganti false");
 
                 lockAgain   = false;
-                excludeApp  = appToLock;
+                excludeApp  = intent.getStringExtra("exclude");
 
                 Log.d(TAG, "dari LOCK => " + excludeApp);
             }
@@ -119,20 +118,23 @@ public class ParentalService extends Service {
                 Log.d(TAG, "BEGIN ------------------------");
 
                 Log.d(TAG, "NOW app => " + runApp);
-/*
+
                 Log.d(TAG, "dari scheduler => "+ runApp + " - "  + excludeApp + " - " + lockAgain);
-                Log.d(TAG, "dari 2 => " + appToLock);*/
+
+                if (!runApp.equals(excludeApp)) {
+                    lockAgain = true;
+                }
 
                 for (String lockApp : apps_to_lock) {
 
                     //TODO bikin exclude : cek disini
                     // loop, muncul screen lock ketika tidak ada di exclude
 
-                    if (runApp.equals(lockApp) && lockAgain == true && excludeApp != runApp) {
-
-                        appToLock = runApp;
+                    if (runApp.equals(lockApp) && lockAgain == true && !runApp.equals(excludeApp)) {
 
                         Log.d(TAG, runApp + " - LOCKED");
+
+                        sPref.edit().putString("exclude", runApp).commit();
 
                         //screenlock
                         Intent intent = new Intent(ParentalService.this, LockScreenActivity.class);
