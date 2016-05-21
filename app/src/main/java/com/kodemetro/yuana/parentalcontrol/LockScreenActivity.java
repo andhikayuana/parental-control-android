@@ -1,5 +1,8 @@
 package com.kodemetro.yuana.parentalcontrol;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kodemetro.yuana.parentalcontrol.receiver.TimerReceiver;
 
 import org.json.JSONObject;
 
@@ -23,6 +28,7 @@ public class LockScreenActivity extends AppCompatActivity {
     private EditText txtAnswer;
     private String mQuestion, mAnswer;
     private JSONObject qa;
+    private SharedPreferences sPref = ParentalApplication.getInstance().getSharedPreferences();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,11 @@ public class LockScreenActivity extends AppCompatActivity {
                 String answer = txtAnswer.getText().toString();
 
                 if (answer.equalsIgnoreCase(mAnswer)){
+
+                    Intent in = new Intent();
+                    in.setAction(ParentalApplication.LOCK);
+                    sendBroadcast(in);
+
                     finish();
                 }
                 else{

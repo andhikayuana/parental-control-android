@@ -44,6 +44,11 @@ public class DaftarAplikasiFragment extends Fragment {
 
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -76,13 +81,8 @@ public class DaftarAplikasiFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -104,8 +104,8 @@ public class DaftarAplikasiFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onDetach() {
+        super.onDetach();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

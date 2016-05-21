@@ -2,7 +2,9 @@ package com.kodemetro.yuana.parentalcontrol;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.util.JsonToken;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -17,6 +19,10 @@ public class ParentalApplication extends Application {
     public static ParentalApplication singleton;
     public static String packageName;
 
+    public static final String TAG = "com.kodemetro.parentalcontrol";
+    public static final String STOP_TIMER = TAG + ".STOP_TIMER";
+    public static final String LOCK = TAG + ".LOCK";
+
     public static ParentalApplication getInstance(){
         return singleton;
     }
@@ -26,6 +32,7 @@ public class ParentalApplication extends Application {
         super.onCreate();
         singleton = this;
         packageName = getPackageName();
+
     }
 
     public SharedPreferences getSharedPreferences() {
@@ -34,7 +41,7 @@ public class ParentalApplication extends Application {
 
     public void logout(){
         SharedPreferences sPref = getSharedPreferences();
-        sPref.edit().clear().commit();
+        sPref.edit().putBoolean("login", false).commit();
     }
 
     public JSONObject getQA(){

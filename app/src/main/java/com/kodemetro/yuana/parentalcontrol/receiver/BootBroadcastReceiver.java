@@ -1,8 +1,10 @@
-package com.kodemetro.yuana.parentalcontrol.service;
+package com.kodemetro.yuana.parentalcontrol.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.kodemetro.yuana.parentalcontrol.service.ParentalService;
 
 public class BootBroadcastReceiver extends BroadcastReceiver {
     public BootBroadcastReceiver() {

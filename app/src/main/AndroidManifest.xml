@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission-sdk-23 android:name="android.permission.READ_LOGS"/>
+    <uses-permission-sdk-23 android:name="android.permission.READ_LOGS" />
     <uses-permission-sdk-23 android:name="android.permission.GET_TASKS" />
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -17,12 +17,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -30,30 +28,30 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LockScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustResize|stateVisible"
-            android:theme="@style/FullscreenTheme"
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:excludeFromRecents="true"/>
+            android:theme="@style/FullscreenTheme"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
 
         <service
             android:name=".service.ParentalService"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
 
         <receiver
-            android:name=".service.BootBroadcastReceiver"
+            android:name=".receiver.BootBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="999999">
@@ -61,6 +59,13 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name=".receiver.TimerReceiver" >
+            <intent-filter>
+                <action android:name="com.kodemetro.yuana.parentalcontrol.LOCK" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
