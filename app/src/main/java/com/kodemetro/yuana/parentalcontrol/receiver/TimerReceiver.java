@@ -37,8 +37,6 @@ public class TimerReceiver extends BroadcastReceiver {
 
     private void unLockTimer(final Context context, int timer) {
 
-        Log.d(TAG, "Mulai hitung timer");
-
         Runnable task = new Runnable() {
             @Override
             public void run() {
@@ -49,9 +47,6 @@ public class TimerReceiver extends BroadcastReceiver {
         };
 
         worker.schedule(task, timer, TimeUnit.MINUTES);
-
-        //how to stop this?
-
-        Log.d(TAG, "Selesai hitung timer");
+        //TODO: how to stop this
     }
 }

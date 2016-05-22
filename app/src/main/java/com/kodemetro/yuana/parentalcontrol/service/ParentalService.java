@@ -59,14 +59,10 @@ public class ParentalService extends Service {
 
             if (in.equals(ParentalApplication.STOP_TIMER)) {
 
-                Log.d(TAG, "MASUK STOP -> " + in);
-
                 lockAgain   = true;
                 excludeApp  = null;
             }
             else if (in.equals(ParentalApplication.LOCK)) {
-
-                Log.d(TAG, "Masuk LOCK lockAgain ganti false");
 
                 lockAgain   = false;
                 excludeApp  = intent.getStringExtra("exclude");
@@ -127,9 +123,6 @@ public class ParentalService extends Service {
 
                 for (String lockApp : apps_to_lock) {
 
-                    //TODO bikin exclude : cek disini
-                    // loop, muncul screen lock ketika tidak ada di exclude
-
                     if (runApp.equals(lockApp) && lockAgain == true && !runApp.equals(excludeApp)) {
 
                         Log.d(TAG, runApp + " - LOCKED");
@@ -140,12 +133,6 @@ public class ParentalService extends Service {
                         Intent intent = new Intent(ParentalService.this, LockScreenActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
-                        //todo simpen package di excludeApp : dengan waktu sekian menit
-                        //setelah waktu sekian menit habis, maka masukkan kembali ke apps_lock pref
-                        //cek jika belum jawab, excludeApp diisi null
-                        //bikin handler atau runnable
-
                     }
                     else {
 
