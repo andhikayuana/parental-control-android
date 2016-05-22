@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        yuana {
+            keyAlias 'yuana'
+            keyPassword 'Pr0gr4mm3r'
+            storePassword 'Pr0gr4mm3r'
+            storeFile file('/home/yuana/AndroidStudioProjects/parental-control/clientkeystore.jks')
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "com.kodemetro.yuana.parentalcontrol"
         minSdkVersion 15
@@ -13,8 +20,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.yuana
+        }
+        debug {
+            signingConfig signingConfigs.yuana
         }
     }
 }
