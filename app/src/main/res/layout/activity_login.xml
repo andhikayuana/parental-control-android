@@ -27,13 +27,16 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/ic_lock"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_dark"
+                android:tint="@android:color/white"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Parental Control"
                 android:layout_gravity="center"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"/>
 
             <android.support.design.widget.TextInputLayout
@@ -79,7 +82,9 @@
                 android:layout_marginTop="16dp"
                 android:padding="15dp"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </ScrollView>
