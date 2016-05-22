@@ -65,8 +65,8 @@ public class CaraPakaiFragment extends Fragment {
             AssetManager assetManager = this.getContext().getAssets();
 
             InputStream cara1 = assetManager.open("daftar_aplikasi.jpg");
-            InputStream cara2 = assetManager.open("materi.jpg");
-            InputStream cara3 = assetManager.open("set_timer.jpg");
+            InputStream cara2 = assetManager.open("set_timer.jpg");
+            InputStream cara3 = assetManager.open("materi.jpg");
 
             Drawable d1 = Drawable.createFromStream(cara1, null);
             Drawable d2 = Drawable.createFromStream(cara2, null);

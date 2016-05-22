@@ -21,17 +21,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Pertama, anda harus memillihh aplikasi apa saja yang akan diunci."/>
+
         <ImageView
             android:id="@+id/imgCara1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2. Selanjutnya, anda diminta untuk mengatur waktu untuk melakukan pnguncian otomatis pada aplikasi yang dipilih."/>
+
         <ImageView
             android:id="@+id/imgCara2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="3. Langkah terakhir, anda memilih materi apa saja yang akan ditampilkan untuk quiz yang akan dijawab oleh anak anda."/>
 
         <ImageView
             android:id="@+id/imgCara3"
