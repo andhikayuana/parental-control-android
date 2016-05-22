@@ -28,8 +28,6 @@ public class TimerReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-//        Toast.makeText(context, "MASUK di TimerReceiver", Toast.LENGTH_SHORT).show();
-
         int timer = sPref.getInt("timer",1);
 
         unLockTimer(context, timer);
@@ -47,6 +45,5 @@ public class TimerReceiver extends BroadcastReceiver {
         };
 
         worker.schedule(task, timer, TimeUnit.MINUTES);
-        //TODO: how to stop this
     }
 }

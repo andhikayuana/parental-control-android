@@ -23,8 +23,6 @@ import java.io.InputStream;
  */
 public class CaraPakaiFragment extends Fragment {
 
-//    private Button btnPreview;
-
     private ImageView imgCara1, imgCara2, imgCara3;
 
     public CaraPakaiFragment() {
@@ -45,17 +43,6 @@ public class CaraPakaiFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_cara_pakai, container, false);
-
-        /*btnPreview = (Button) root.findViewById(R.id.btnPreview);
-
-        btnPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO to lock screen
-                startActivity(new Intent(getActivity().getApplicationContext(),
-                        LockScreenActivity.class));
-            }
-        });*/
 
         imgCara1 = (ImageView) root.findViewById(R.id.imgCara1);
         imgCara2 = (ImageView) root.findViewById(R.id.imgCara2);
@@ -89,12 +76,6 @@ public class CaraPakaiFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override
